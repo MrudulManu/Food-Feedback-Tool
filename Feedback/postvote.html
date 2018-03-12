@@ -1,0 +1,56 @@
+<html>
+<head>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+function postvote()
+{
+var all=document.getElementsByTagName("input");
+for(var i=0;i<all.length;i++)
+{
+ if(all[i].type=="radio" && all[i].checked)
+ {
+  var vote=all[i].value;
+ }
+}
+    
+if(vote)
+{
+ $.ajax({
+ type: 'post',
+ url: 'insertvote.php',
+ data: {
+  vote_val:vote
+ },
+ success: function (response) {
+  $( '#vote_status' ).html(response);
+ }
+ });
+}
+
+else
+{
+ $( '#vote_status' ).html("Please Select Language");
+}
+
+return false;
+}
+
+</script>
+
+</head>
+<body>
+		
+<form method="POST" onsubmit="return postvote();">
+ <p>What is your Food choice?</p>
+ Bread <input type="radio" name="yourvote" value="Bread">
+ Biryani <input type="radio" name="yourvote" value="Biryani">
+ Meals <input type="radio" name="yourvote" value="Meals">
+ Pizza <input type="radio" name="yourvote" value="Pizza">
+ Fried Rice <input type="radio" name="yourvote" value="Fried Rice">
+ Curd Rice <input type="radio" name="yourvote" value="Curd Rice">
+ <input type="submit" name="submit_form" value="Vote">
+</form>
+<p id="vote_status"></p>
+
+</body>
+</html>
